@@ -9,14 +9,17 @@ camera calibration for either mono (usb webcam) or stereo cameras (ZED, Withrobo
 
 # [save_stereo_images]
 #### 목적 : 
-스테레오 캘리브레이션을 위해 스테레오 카메라오 부터 ** 체스보드가 적당히 잘 ** 보이는 왼쪽/오른쪽 이미지들을 저장하기 위함.
+모노/스테레오 캘리브레이션을 위해 스테레오 카메라오 부터 ** 체스보드가 적당히 잘 ** 보이는 왼쪽/오른쪽 이미지들을 저장하기 위함.
 #### 빌드 :
 	$ make -f Makefile_save_stereo_images
 #### 사용 예 :
 See ``save_stereo_images.sh``<br/>
 	
-	$ ./save_stereo_images_exe -s_mm=24.95 -w=10 -h=7 -width=672 -height=376 -image_list=data/stereo_calib_khchoi.xml -show=1 -nr=1 -th_overlap=0.6 -sec_int=7 -dir_img=data
+	$ ./save_stereo_images_exe -mono -ocam=1 -cam=1 -s_mm=24.95 -w=10 -h=7 -width=672 -height=376 -image_list=data/stereo_calib_khchoi.xml -show=1 -nr=1 -th_overlap=0.6 -sec_int=7 -dir_img=data
 #### 인자들 :
+-mono = flag for mono camera calibration (Don't use for stereo calibration).<br/>
+-ocam = zero for non-Withrobot stereo camera. non-zero for Withrobot stereo camera.<br/>
+-cam = camera index.<br/>
 -s_mm = chessboard grid side length in millimeters.<br/>
 -w = # of horizontal grids<br/>
 -h = # of vertical grids<br/>
@@ -39,6 +42,7 @@ See ``stereo_calib_eyedea.sh``<br/>
 	
 	$ ./stereo_calib_eyedea_exe -s=24.95 -w=10 -h=7 -dir=data/zed_672x376/ -e=10,8 -input=data/stereo_calib_khchoi.xml
 #### 인자들 :
+-mono = flag for mono camera calibration (Don't use for stereo calibration).<br/>
 -s = length of the side of the chessboard square in millimeters.<br/> 
 -w = # of grid in horizontal side. <br/>
 -h = # of grid in vertical side.  <br/>
@@ -56,8 +60,13 @@ See ``get_rectified_stereo.sh``<br/>
 	
 	$ ./get_rectified_stereo_exe -int=data/zed_672x376/intrinsics.yml -ext=data/zed_672x376/extrinsics.yml -post=alfa_1 -input=data/stereo_calib_khchoi.xml -dir=data/zed_672x376/ -sec=1 -alfa=1
 #### 인자들 :
--int = path to the left/right intrinsic parameter file <br/>
--ext = path to the extrinsic parameter file <br/>
+
+-mono = flag for mono camera calibration (Don't use for stereo calibration).<br/>
+-ocam = zero for non-Withrobot stereo camera. non-zero for Withrobot stereo camera.<br/>
+-cam = camera index.<br/>
+-int = path to the stereo left/right intrinsic parameter yml file <br/>
+-ext = path to the stereo extrinsic parameter yml file <br/>
+-calib = path to mono calibration parameter yml file <br/>
 -alfa = [0 ~ 1 or -1]. The scale factor for undistortion and rectification. Check the following post for the effect ( http://support.eyedea.co.kr:8200/browse/VIS-8?focusedCommentId=19304&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-19304 ) <br/>
 -post = postfix for the resulted yml file name. <br/>
 -input = path to the xml file where the left and right images are listed. <br/>
