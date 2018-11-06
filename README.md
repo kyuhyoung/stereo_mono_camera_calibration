@@ -9,7 +9,7 @@ camera calibration for either mono (usb webcam) or stereo cameras (ZED, Withrobo
 
 # [save_stereo_images]
 #### 목적 : 
-모노/스테레오 캘리브레이션을 위해 스테레오 카메라오 부터 ** 체스보드가 적당히 잘 ** 보이는 왼쪽/오른쪽 이미지들을 저장하기 위함.
+모노/스테레오 캘리브레이션을 위해 스테레오 카메라오 부터 **체스보드가 적당히 잘** 보이는 왼쪽/오른쪽 이미지들을 저장하기 위함.
 #### 빌드 :
 	$ make -f Makefile_save_stereo_images
 #### 사용 예 :
@@ -103,4 +103,4 @@ HEIGHT_CHESS = # of grid in vertical side of chessboard. <br/>
 CAM_IDX = camera index. <br/>
 IMAGE_XML = path to xml file where image file names are listed <br/>
 DIR = folder where actual left/right image and calibration parameter files are saved. <br/> 
-ALPHA = [0 ~ 1 or -1]. The scale factor for undistortion and rectification. Check the following post for the effect ( http://support.eyedea.co.kr:8200/browse/VIS-8?focusedCommentId=19304&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-19304 ) <br/>
+ALPHA = [0 ~ 1 or -1]. The scale factor for undistortion and rectification.<br/>
