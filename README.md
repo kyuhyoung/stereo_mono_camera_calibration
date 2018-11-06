@@ -34,7 +34,7 @@ See ``save_stereo_images.sh``<br/>
 
 # [stereo_calib_eyedea]
 #### 목적 : 
-저장된 왼쪽/오른쪽 이미지 쌍들로 부터 스테레오 캘리브레이션을 수행하여 intrinsic / extrinsic paramter 들을 구하고 이를 yml 파일로 저장함.
+저장된 (왼쪽/오른쪽) 이미지 쌍들로 부터 (스테레오) 모노 캘리브레이션을 수행하여 intrinsic / extrinsic paramter 들을 구하고 이를 yml 파일로 저장함.
 #### 빌드 :
 	$ make -f Makefile_stereo_calib
 #### 사용 예 :
