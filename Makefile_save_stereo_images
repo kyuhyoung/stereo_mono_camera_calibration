@@ -1,0 +1,14 @@
+CC = g++
+#INC = -I/usr/local/zed/include -I/usr/local/cuda/include
+INC = -I/usr/local/cuda/include
+CFLAGS = -g -Wall -std=c++11 $(INC)
+SRC_MAIN = save_stereo_images.cpp
+PROG = $(SRC_MAIN:.cpp=_exe)
+SRCS = $(SRC_MAIN) StereoCam.cpp withrobot_camera.cpp withrobot_utility.cpp util.cpp
+OPENCV = `pkg-config opencv --cflags --libs`
+#LIB_DIR = -L/usr/local/zed/lib/
+LIBS += $(OPENCV) -lstdc++fs -lv4l2 -lpthread -ludev
+
+$(PROG):$(SRCS)
+	$(CC) $(CFLAGS) -o $(PROG) $(SRCS) $(LIBS)
+#$(CC) $(CFLAGS) -o $(PROG) $(SRCS) $(LIBS) $(LIB_DIR)
