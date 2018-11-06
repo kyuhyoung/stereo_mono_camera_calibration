@@ -1,5 +1,5 @@
 # stereo_mono_camera_calibration
-camera calibration for either mono (usb webcam) or stereo cameras (ZED, Withrobot OCAMS etc.).
+camera calibration for either mono (usb webcam) or stereo cameras (ZED, Withrobot OCAMS etc.).<br/>
 ```-mono``` is the switching flag.
 
 
