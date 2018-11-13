@@ -67,7 +67,7 @@ See ``get_rectified_stereo.sh``<br/>
 -int = path to the stereo left/right intrinsic parameter yml file <br/>
 -ext = path to the stereo extrinsic parameter yml file <br/>
 -calib = path to mono calibration parameter yml file <br/>
--alfa = [0 ~ 1 or -1]. The scale factor for undistortion and rectification.  Check Fig. 1 ~ 4 for the effect of alfa<br/>
+-alfa = [0 ~ 1 or -1]. The scale factor for undistortion and rectification.  Check <Fig. 1 ~ 4> for the effect of alfa<br/>
 -post = postfix for the resulted yml file name. <br/>
 -input = path to the xml file where the left and right images are listed. <br/>
 -dir = the directory where the resulted rectifed images are supposed to be saved. <br/>
