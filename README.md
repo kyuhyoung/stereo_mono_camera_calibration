@@ -74,7 +74,7 @@ See ``get_rectified_stereo.sh``<br/>
 -sec = display interval in seconds. <br/>
 
 <Fig. 1>![<Fig. 1>](figures/rectified_alfa_0_02.png)
-
+<Fig. 1>![<Fig. 1>](http://support.eyedea.co.kr:8200/secure/thumbnail/19794/_thumb_19794.png)
 # All in sequence
 #### 사용 예 :
 See ``all_in_sequence.sh``<br/>
