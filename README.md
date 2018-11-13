@@ -67,16 +67,23 @@ See ``get_rectified_stereo.sh``<br/>
 -int = path to the stereo left/right intrinsic parameter yml file <br/>
 -ext = path to the stereo extrinsic parameter yml file <br/>
 -calib = path to mono calibration parameter yml file <br/>
--alfa = [0 ~ 1 or -1]. The scale factor for undistortion and rectification.  Check Fig. 1 for the effect of alfa<br/>
+-alfa = [0 ~ 1 or -1]. The scale factor for undistortion and rectification.  Check Fig. 1 ~ 4 for the effect of alfa<br/>
 -post = postfix for the resulted yml file name. <br/>
 -input = path to the xml file where the left and right images are listed. <br/>
 -dir = the directory where the resulted rectifed images are supposed to be saved. <br/>
 -sec = display interval in seconds. <br/>
 
-[<Fig. 1> alfa = -1](rectified_alfa_-1_02.png)
-[<Fig. 2> alfa = 0](./figure/rectified_alfa_0_02.png)
-[<Fig. 3> alfa = 0.5](./figure/rectified_alfa_0.5_02.png)
-[<Fig. 4> alfa = 1](./figure/rectified_alfa_-1_1.png)
+<Fig. 1> alfa = -1
+![<Fig. 1> alfa = -1](figure/rectified_alfa_-1_02.png)
+
+<Fig. 2> alfa = 0
+![<Fig. 2> alfa = 0](figure/rectified_alfa_0_02.png)
+
+<Fig. 3> alfa = 0.5
+![<Fig. 3> alfa = 0.5](figure/rectified_alfa_0.5_02.png)
+
+<Fig. 4> alfa = 1
+![<Fig. 4> alfa = 1](figure/rectified_alfa_1_02.png)
 
 # All in sequence
 #### 사용 예 :
