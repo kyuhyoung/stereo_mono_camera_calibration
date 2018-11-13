@@ -73,8 +73,11 @@ See ``get_rectified_stereo.sh``<br/>
 -dir = the directory where the resulted rectifed images are supposed to be saved. <br/>
 -sec = display interval in seconds. <br/>
 
-<Fig. 1>![<Fig. 1>](figures/rectified_alfa_0_02.png)
-<Fig. 1>![<Fig. 1>](http://support.eyedea.co.kr:8200/secure/thumbnail/19794/_thumb_19794.png)
+[<Fig. 1> alfa = -1](rectified_alfa_-1_02.png)
+[<Fig. 2> alfa = 0](./figure/rectified_alfa_0_02.png)
+[<Fig. 3> alfa = 0.5](./figure/rectified_alfa_0.5_02.png)
+[<Fig. 4> alfa = 1](./figure/rectified_alfa_-1_1.png)
+
 # All in sequence
 #### 사용 예 :
 See ``all_in_sequence.sh``<br/>
