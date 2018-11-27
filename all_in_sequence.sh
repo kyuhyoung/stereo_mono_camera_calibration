@@ -6,15 +6,15 @@ set -e
 
 IS_OCAM=0
 
-CAM_IDX=0
-#CAM_IDX=1
+#CAM_IDX=0
+CAM_IDX=1
 
 ZED=zed
 OCAMS=ocams
 
 #CAMERA=$ZED                                                                                  
-#CAMERA=$OCAMS  
-CAMERA=logitech_c920  
+CAMERA=$OCAMS  
+#CAMERA=logitech_c920  
 
 if [ $CAMERA = $ZED ]; then 
 	WIDTH=672
@@ -73,7 +73,7 @@ echo "save_stereo_images finishes."
 
 # 스테레오 카메라 이미지 저장
 echo "save_stereo_images starts."
-#$DIR_STEREO/save_stereo_images_exe -ocam=$IS_OCAM -cam=$CAM_IDX -s_mm=$SQUARE_MM -w=$WIDTH_CHESS -h=$HEIGHT_CHESS -width=$WIDTH -height=$HEIGHT -image_list=$FILE_IMG_LIST -dir_img=$DIR_CALIB -th_overlap=0.6 -sec_int=7
+$DIR_STEREO/save_stereo_images_exe -ocam=$IS_OCAM -cam=$CAM_IDX -s_mm=$SQUARE_MM -w=$WIDTH_CHESS -h=$HEIGHT_CHESS -width=$WIDTH -height=$HEIGHT -image_list=$FILE_IMG_LIST -dir_img=$DIR_CALIB -th_overlap=0.6 -sec_int=7
 echo "save_stereo_images finishes."
 
 echo "stereo_calib_eyedea starts."
@@ -86,7 +86,7 @@ echo "stereo_calib_eyedea finishes."
 echo "get_rectified_stereo starts."
 #   image file version 
 #$DIR_STEREO/get_rectified_stereo_exe -input=$FILE_IMG_LIST -int=$FILE_INTR -ext=$FILE_EXTR -alfa=$ALPHA -post=alfa_$ALPHA -sec=1 -dir_img=$DIR_CALIB -dir_rect=$DIR_CALIB/rectified_result                                                                    
-$DIR_STEREO/get_rectified_stereo_exe -mono -input=$FILE_IMG_LIST -calib=$FILE_MONO -alfa=$ALPHA -post=alfa_$ALPHA -sec=10 -dir_img=$DIR_CALIB -dir_rect=$DIR_CALIB/rectified_result                                                                    
+#$DIR_STEREO/get_rectified_stereo_exe -mono -input=$FILE_IMG_LIST -calib=$FILE_MONO -alfa=$ALPHA -post=alfa_$ALPHA -sec=10 -dir_img=$DIR_CALIB -dir_rect=$DIR_CALIB/rectified_result                                                                    
 #   camera version
 #$DIR_STEREO/get_rectified_stereo_exe -ocam=$IS_OCAM -mono -cam=$CAM_IDX -width=$WIDTH -height=$HEIGHT -int=$FILE_INTR -ext=$FILE_EXTR -alfa=$ALPHA -post=alfa_$ALPHA -sec=1 -dir_rect=$DIR_CALIB/rectified_result
 echo "get_rectified_stereo finishes."

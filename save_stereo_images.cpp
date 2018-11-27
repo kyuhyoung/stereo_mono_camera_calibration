@@ -45,6 +45,12 @@
 using namespace cv;
 using namespace std;
 
+#define SAVE_IMAGES
+
+#ifdef SAVE_IMAGES
+#define INTERVAL_SAVE	10
+#endif
+
 #define SEC_INTERVAL        2
 
 typedef struct
@@ -336,9 +342,9 @@ vector<Scalar> make_color_list(int n_color = 0)
     return li_color;
 }
 
-bool save_images_unless_duplicated(vector<vector<Point> >& li_li_corner_hull_l, vector<vector<Point> >& li_li_corner_hull_r, vector<Mat>& li_chessboard_mask_l, vector<Mat>& li_chessboard_mask_r, vector<int>& li_area_mask_l, vector<int>& li_area_mask_r, const int n_img_saved, const vector<string>& li_fn_img, const vector<Point>& li_corner_l, const vector<Point>& li_corner_r, const Mat& mat_l, const Mat& mat_r, const string& dir_img, const float th_ratio_overlap, const Size2i& imageSize)
+bool save_images_unless_duplicated(int& idx_duplicated, vector<vector<Point> >& li_li_corner_hull_l, vector<vector<Point> >& li_li_corner_hull_r, vector<Mat>& li_chessboard_mask_l, vector<Mat>& li_chessboard_mask_r, vector<int>& li_area_mask_l, vector<int>& li_area_mask_r, const int n_img_saved, const vector<string>& li_fn_img, const vector<Point>& li_corner_l, const vector<Point>& li_corner_r, const Mat& mat_l, const Mat& mat_r, const string& dir_img, const float th_ratio_overlap, const Size2i& imageSize)
 {
-	bool is_mono = li_corner_r.empty();
+	bool is_saved = false, is_mono = li_corner_r.empty();
 	vector<Point> hull_l, hull_r;
 	convexHull(li_corner_l, hull_l); 
 	//if(!(param_save->is_mono))
@@ -346,15 +352,16 @@ bool save_images_unless_duplicated(vector<vector<Point> >& li_li_corner_hull_l, 
 	{
 		convexHull(Mat(li_corner_r), hull_r);
 	}
-    int idx_duplicated = check_if_chessboard_is_duplicated(li_li_corner_hull_l, li_li_corner_hull_r, li_chessboard_mask_l, li_chessboard_mask_r, li_area_mask_l, li_area_mask_r, hull_l, hull_r, th_ratio_overlap, imageSize);
+    idx_duplicated = check_if_chessboard_is_duplicated(li_li_corner_hull_l, li_li_corner_hull_r, li_chessboard_mask_l, li_chessboard_mask_r, li_area_mask_l, li_area_mask_r, hull_l, hull_r, th_ratio_overlap, imageSize);
 	if (idx_duplicated < 0)
 	{
 		//save_images(param_save->imagelist, n_img_saved * (is_mono ? 1 : 2), is_mono ? mat_full_copy_2 : mat_l_copy, mat_r_copy);
 		save_images(li_fn_img, n_img_saved * (is_mono ? 1 : 2), mat_l, mat_r, dir_img);
+		is_saved = true;
 		//enough_time_has_passed = false;
 		//sec_saved_last = what_time_in_seconds_is_it_now();
 	}
-	return true;
+	return is_saved;
 }
  
 
@@ -418,6 +425,9 @@ void *fetch_in_thread(void *ptr)
 
 void *save_in_thread(void *ptr)
 {
+#ifdef SAVE_IMAGES
+	char buff[100];
+#endif
     struct_save *param_save = (struct_save *)ptr;
     //std::cout << "param_save->dir_img : " << param_save->dir_img << std::endl;
     //StereCam *cap = (StereoCam *)ptr;
@@ -452,6 +462,20 @@ void *save_in_thread(void *ptr)
         draw_chessboard_masks_both(mat_full_copy/*chessboard_overlaid*/, li_li_corner_hull_l, li_li_corner_hull_r,li_color, idx_duplicated); 
         draw_count(mat_full_copy/*chessboard_overlaid*/, li_li_corner_hull_l.size(), n_img);
         imshow("mat_full_copy", mat_full_copy); waitKey(1);
+#ifdef SAVE_IMAGES
+		if(n_img_saved && 0 == n_frm % INTERVAL_SAVE)
+		{
+			int i_save = n_frm / INTERVAL_SAVE;
+			snprintf(buff, sizeof(buff), "sampled_%03d.png", i_save);
+			std::string buffAsStdStr = buff;
+			string fn_mat_full_copy = python_join_equivalent(param_save->dir_img, buffAsStdStr);  	
+			imwrite(fn_mat_full_copy, mat_full_copy);
+			cout << fn_mat_full_copy << " is just saved !!!" << endl;
+			//cout << fn_mat_full_copy << " is just saved !!!" << endl;
+			//cout << fn_mat_full_copy << " is just saved !!!" << endl;
+		}
+#endif	// SAVE_IMAGES
+
         if (n_img_saved >= n_img) 
         {
             cout << "================================================" << endl;
@@ -469,7 +493,12 @@ void *save_in_thread(void *ptr)
             chessboard_detected = check_if_chessboard_in_the_image(li_corner_l, li_corner_r, param_save->is_mono ? mat_full_copy_2 : mat_l_copy, mat_r_copy, param_save->boardSize);
             if (chessboard_detected)
             {
-				save_images_unless_duplicated(li_li_corner_hull_l, li_li_corner_hull_r, li_chessboard_mask_l, li_chessboard_mask_r, li_area_mask_l, li_area_mask_r, n_img_saved, param_save->imagelist, li_corner_l, li_corner_r, param_save->is_mono ? mat_full_copy_2 : mat_l_copy, mat_r_copy, param_save->dir_img, param_save->th_ratio_overlap, param_save->imageSize);
+				bool is_saved = save_images_unless_duplicated(idx_duplicated, li_li_corner_hull_l, li_li_corner_hull_r, li_chessboard_mask_l, li_chessboard_mask_r, li_area_mask_l, li_area_mask_r, n_img_saved, param_save->imagelist, li_corner_l, li_corner_r, param_save->is_mono ? mat_full_copy_2 : mat_l_copy, mat_r_copy, param_save->dir_img, param_save->th_ratio_overlap, param_save->imageSize);
+				if(is_saved)
+				{
+					sec_saved_last = what_time_in_seconds_is_it_now();
+					enough_time_has_passed = false;
+				}
 			}
         }        
         else
@@ -488,7 +517,7 @@ void *save_in_thread(void *ptr)
         {   
             fps_fetch = (double)(n_frm) / (sec_cur - sec_start);
             //printf("\033[2J");        printf("\033[1;1H");
-           printf("\nFPS 4 save : %.1f\n", fps_fetch);
+           	printf("\nFPS 4 save : %.1f\n", fps_fetch);
             sec_pre = sec_cur; 
         }
     }
