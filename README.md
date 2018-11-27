@@ -32,6 +32,15 @@ See ``save_stereo_images.sh``<br/>
 -sec_int = seconds for the idle time for next capture<br/>
 -dir_img = folder to save the captured images. <br/>   
 
+<Fig. 1> 체스보드 1번째 뷰 저장 직후
+![<Fig. 1> chessboard1](figure/010.png)
+
+<Fig. 2> 체스보드 3째 뷰 저장 직후
+![<Fig. 2> chessboard3](figure/024.png)
+
+<Fig. 3> 저장된 3째 뷰와 현재 chessboard 뷰가 비슷할 때 '중복' 경고.
+![<Fig. 3> chessboard3_duplicated](figure/030.png)
+
 # [stereo_calib_eyedea]
 #### 목적 : 
 저장된 (왼쪽/오른쪽) 이미지 쌍들로 부터 (스테레오) 모노 캘리브레이션을 수행하여 intrinsic / extrinsic paramter 들을 구하고 이를 yml 파일로 저장함.
@@ -67,23 +76,23 @@ See ``get_rectified_stereo.sh``<br/>
 -int = path to the stereo left/right intrinsic parameter yml file <br/>
 -ext = path to the stereo extrinsic parameter yml file <br/>
 -calib = path to mono calibration parameter yml file <br/>
--alfa = [0 ~ 1 or -1]. The scale factor for undistortion and rectification.  Check <Fig. 1 ~ 4> for the effect of alfa<br/>
+-alfa = [0 ~ 1 or -1]. The scale factor for undistortion and rectification.  Check <Fig. 4 ~ 7> for the effect of alfa<br/>
 -post = postfix for the resulted yml file name. <br/>
 -input = path to the xml file where the left and right images are listed. <br/>
 -dir = the directory where the resulted rectifed images are supposed to be saved. <br/>
 -sec = display interval in seconds. <br/>
 
-<Fig. 1> alfa = -1
-![<Fig. 1> alfa = -1](figure/rectified_alfa_-1_02.png)
+<Fig. 4> alfa = -1
+![<Fig. 4> alfa = -1](figure/rectified_alfa_-1_02.png)
 
-<Fig. 2> alfa = 0
-![<Fig. 2> alfa = 0](figure/rectified_alfa_0_02.png)
+<Fig. 5> alfa = 0
+![<Fig. 5> alfa = 0](figure/rectified_alfa_0_02.png)
 
-<Fig. 3> alfa = 0.5
-![<Fig. 3> alfa = 0.5](figure/rectified_alfa_0.5_02.png)
+<Fig. 6> alfa = 0.5
+![<Fig. 6> alfa = 0.5](figure/rectified_alfa_0.5_02.png)
 
-<Fig. 4> alfa = 1
-![<Fig. 4> alfa = 1](figure/rectified_alfa_1_02.png)
+<Fig. 7> alfa = 1
+![<Fig. 7> alfa = 1](figure/rectified_alfa_1_02.png)
 
 # All in sequence
 #### 사용 예 :
