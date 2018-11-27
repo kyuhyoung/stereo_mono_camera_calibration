@@ -35,10 +35,10 @@ See ``save_stereo_images.sh``<br/>
 <Fig. 1> 체스보드 1번째 뷰 저장 직후
 ![<Fig. 1> chessboard1](figure/010.png)
 
-<Fig. 2> 체스보드 3째 뷰 저장 직후
+<Fig. 2> 체스보드 3번째 뷰 저장 직후
 ![<Fig. 2> chessboard3](figure/024.png)
 
-<Fig. 3> 저장된 3째 뷰와 현재 chessboard 뷰가 비슷할 때 '중복' 경고.
+<Fig. 3> 저장된 3번째 뷰와 현재 chessboard 뷰가 비슷할 때 '중복' 경고.
 ![<Fig. 3> chessboard3_duplicated](figure/030.png)
 
 # [stereo_calib_eyedea]
