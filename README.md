@@ -9,7 +9,8 @@ camera calibration for either mono (usb webcam) or stereo cameras (ZED, Withrobo
 
 # [save_stereo_images]
 #### 목적 : 
-모노/스테레오 캘리브레이션을 위해 스테레오 카메라오 부터 **체스보드가 적당히 잘** 보이는 왼쪽/오른쪽 이미지들을 저장하기 위함.
+모노/스테레오 캘리브레이션을 위해 스테레오 카메라오 부터 **체스보드가 적당히 잘** 보이는 왼쪽/오른쪽 이미지들을 저장하기 위함.  <Fig. 1> 과 <Fig. 2>는 스테레오 카메라로 부터 각각 첫번째와 세번째 체스보드 이미지 쌍을 저장한 직후의 카메라 뷰의 예를 보여 주고 있다.  <Fig. 3>은 세번째 저장된 체스보드 자세와 현재 체스보드의 자세가 비슷하기 때문에 새로운 거리에서 새로운 자세를 취하라는 '경고' 메시지로 filled 된 사각형을 display하고 있다.
+
 #### 빌드 :
 	$ make -f Makefile_save_stereo_images
 #### 사용 예 :
