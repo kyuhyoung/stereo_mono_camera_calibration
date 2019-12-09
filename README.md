@@ -8,16 +8,16 @@ camera calibration for either mono (usb webcam) or stereo cameras (ZED, Withrobo
 ### [save_stereo_images] -> [stereo_calib_eyedea] -> [get_rectified_stereo]
 
 # [save_stereo_images]
-#### 목적 : 
+#### 목적 
 모노/스테레오 캘리브레이션을 위해 스테레오 카메라오 부터 **체스보드가 적당히 잘** 보이는 왼쪽/오른쪽 이미지들을 저장하기 위함.  <Fig. 1> 과 <Fig. 2>는 스테레오 카메라로 부터 각각 첫번째와 세번째 체스보드 이미지 쌍을 저장한 직후의 카메라 뷰의 예를 보여 주고 있다.  <Fig. 3>은 세번째 저장된 체스보드 자세와 현재 체스보드의 자세가 비슷하기 때문에 새로운 거리에서 새로운 자세를 취하라는 '경고' 메시지로 filled 된 사각형을 display하고 있다.
 
-#### 빌드 :
+#### 빌드
 	$ make -f Makefile_save_stereo_images
-#### 사용 예 :
+#### 사용 예
 See ``save_stereo_images.sh``<br/>
 	
 	$ ./save_stereo_images_exe -mono -ocam=1 -cam=1 -s_mm=24.95 -w=10 -h=7 -width=672 -height=376 -image_list=data/stereo_calib_khchoi.xml -show=1 -nr=1 -th_overlap=0.6 -sec_int=7 -dir_img=data
-#### 인자들 :
+#### 인자들
 -mono = flag for mono camera calibration (Don't use for stereo calibration).<br/>
 -ocam = zero for non-Withrobot stereo camera. non-zero for Withrobot stereo camera.<br/>
 -cam = camera index.<br/>
@@ -43,15 +43,15 @@ See ``save_stereo_images.sh``<br/>
 ![<Fig. 3> chessboard3_duplicated](figure/030.png)
 
 # [stereo_calib_eyedea]
-#### 목적 : 
+#### 목적 
 저장된 (왼쪽/오른쪽) 이미지 쌍들로 부터 (스테레오) 모노 캘리브레이션을 수행하여 intrinsic / extrinsic paramter 들을 구하고 이를 yml 파일로 저장함.
-#### 빌드 :
+#### 빌드
 	$ make -f Makefile_stereo_calib
-#### 사용 예 :
+#### 사용 예
 See ``stereo_calib_eyedea.sh``<br/>
 	
 	$ ./stereo_calib_eyedea_exe -s=24.95 -w=10 -h=7 -dir=data/zed_672x376/ -e=10,8 -input=data/stereo_calib_khchoi.xml
-#### 인자들 :
+#### 인자들
 -mono = flag for mono camera calibration (Don't use for stereo calibration).<br/>
 -s = length of the side of the chessboard square in millimeters.<br/> 
 -w = # of grid in horizontal side. <br/>
@@ -61,15 +61,15 @@ See ``stereo_calib_eyedea.sh``<br/>
 -input = path to the xml file in which image file names are listed.<br/>
 
 # [get_rectified_stereo]
-#### 목적 : 
+#### 목적 
 캘리브레이션 결과 파라미터 파일들(왼쪽/오른쪽 intrinsic parameter들의 yml 파일과, extrinsic paramter들의 yml 파일)로 부터 임의의 왼쪽/오른쪽 이미지 쌍들에 대해 rectified된 이미지들을 구하고 저장함.
 #### 빌드 :
 	$ make -f Makefile_get_rectified_stereo
-#### 사용 예 :
+#### 사용 예
 See ``get_rectified_stereo.sh``<br/>
 	
 	$ ./get_rectified_stereo_exe -int=data/zed_672x376/intrinsics.yml -ext=data/zed_672x376/extrinsics.yml -post=alfa_1 -input=data/stereo_calib_khchoi.xml -dir=data/zed_672x376/ -sec=1 -alfa=1
-#### 인자들 :
+#### 인자들
 
 -mono = flag for mono camera calibration (Don't use for stereo calibration).<br/>
 -ocam = zero for non-Withrobot stereo camera. non-zero for Withrobot stereo camera.<br/>
@@ -96,7 +96,7 @@ See ``get_rectified_stereo.sh``<br/>
 ![<Fig. 7> alfa = 1](figure/rectified_alfa_1_02.png)
 
 # All in sequence
-#### 사용 예 :
+#### 사용 예
 See ``all_in_sequence.sh``<br/>
 ```	
 IS_OCAM=0
@@ -187,7 +187,7 @@ $DIR_STEREO/get_rectified_stereo_exe -mono -input=$FILE_IMG_LIST -calib=$FILE_MO
 echo "get_rectified_stereo finishes."
 ```
 
-#### 인자들 :
+#### 인자들
 CAMERA = currently one of [zed, ocams] <br/>
 WIDTH = width of left or right camera image <br/>
 HEIGHT = width of left or right camera image <br/>
@@ -198,3 +198,7 @@ CAM_IDX = camera index. <br/>
 IMAGE_XML = path to xml file where image file names are listed <br/>
 DIR = folder where actual left/right image and calibration parameter files are saved. <br/> 
 ALPHA = [0 ~ 1 or -1]. The scale factor for undistortion and rectification.<br/>
+
+#### TODO
+* calibration 부분을 Octave 코드로 대체
+* Octave 코드로 대체하면 findChessboard 부분이 필요없으므로 대충의 chessboard를 잡는 알고리듬만 필요.
