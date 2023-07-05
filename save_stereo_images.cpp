@@ -153,7 +153,34 @@ static int print_help()
 }
 
 
+vector<string> file_2_list_of_string(const string& fn)
+{
+    vector<string> li_str;
+    std::ifstream input(fn);
+    if(input.is_open())
+    {
+        std::string line, delimiter = " =[],;";
+        std::string const delims{ delimiter };
+        while(std::getline(input, line))
+        {
+            if(line.empty() || 0 == line.rfind("#", 0))
+            {
+                continue;
+            }
+            //vector<string> li_str = split_string_by_delimiter(line, delims);
+            li_str.push_back(line);
+        }
+        input.close();
+    }
+    else
+    {
+        cout << "Can NOT open the text file : " << fn << endl;   //exit(0);
+    }
+    return li_str;
+}
 
+
+/*
 static bool readStringList( const string& filename, vector<string>& l )
 {
     l.resize(0);
@@ -168,6 +195,7 @@ static bool readStringList( const string& filename, vector<string>& l )
         l.push_back((string)*it);
     return true;
 }
+*/
 
 
 bool check_if_chessboard_in_the_image(vector<Point>& foundPoints_left, vector<Point>& foundPoints_right, Mat& left_raw, Mat& right_raw, Size& chessboardDimensions)
@@ -614,8 +642,10 @@ int main(int argc, char** argv) {
     {
         exit(0);
     }
-    bool ok = readStringList(imagelistfn, param_save.imagelist);//, is_saved;
-    if(!ok || param_save.imagelist.empty())
+    //bool ok = readStringList(imagelistfn, param_save.imagelist);//, is_saved;
+    param_save.imagelist = file_2_list_of_string(imagelistfn);
+    //if(!ok || param_save.imagelist.empty())
+    if(param_save.imagelist.empty())
     {
         cout << "Can NOT open " << imagelistfn << " or the string list is empty" << endl;
         return print_help();
@@ -625,12 +655,14 @@ int main(int argc, char** argv) {
 	param_save.is_mono = is_mono;
     if(is_mono)
 	{
-		printf("main AAA\n");
-		cap_1 = new cv::VideoCapture(idx_cam);
+		//printf("idx_camain AAA\n");
+		cout << "idx_cam : " << idx_cam << endl;
+        cap_1 = new cv::VideoCapture(idx_cam);
+        //cap_1 = new cv::VideoCapture();
 		printf("main BBB\n");
 		if(!cap_1->isOpened())
 		{
-		printf("main EEE\n");
+		    printf("main EEE\n");
 			return -1;
 		}
 		printf("main FFF\n");
