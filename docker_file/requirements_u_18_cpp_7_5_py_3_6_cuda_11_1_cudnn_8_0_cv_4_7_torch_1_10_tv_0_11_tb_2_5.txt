@@ -1,0 +1,7 @@
+easing_functions==1.0.4
+tensorboard==2.5.0
+av==8.0.3
+torch==1.9.0
+torchvision==0.10.0
+tqdm==4.61.1
+pims==0.5

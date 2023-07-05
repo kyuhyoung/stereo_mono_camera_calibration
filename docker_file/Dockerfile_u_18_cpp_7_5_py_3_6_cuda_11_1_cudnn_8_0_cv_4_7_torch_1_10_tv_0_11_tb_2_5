@@ -1,0 +1,49 @@
+FROM nvidia/cuda:11.1.1-cudnn8-devel-ubuntu18.04
+
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv 3BF863CC
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+#RUN hwclock --hctosys 
+RUN echo "Acquire::Check-Valid-Until \"false\";\nAcquire::Check-Date \"false\";" | cat > /etc/apt/apt.conf.d/10no--check-valid-until
+RUN apt-get update
+#RUN apt-get install -y fish wget git ffmpeg python3-pip freeglut3-dev llvm-dev llvm-6.0-tools
+RUN apt-get install -y fish wget git gedit ffmpeg python3-pip
+RUN python3 -m pip install --upgrade pip
+
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10
+#RUN /usr/bin/python -V
+#RUN /usr/bin/python2 -V
+#RUN /usr/bin/python3 -V
+#RUN ln -s /usr/bin/python3 /usr/bin/python && ln -s /usr/bin/pip3 /usr/bin/pip
+
+COPY requirements_u_18_cpp_7_5_py_3_6_cuda_11_1_cudnn_8_0_cv_4_7_torch_1_10_tv_0_11_tb_2_5.txt .
+RUN pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu111
+RUN sed -i 's#scipy==1.7.1#scipy#g' requirements_u_18_cpp_7_5_py_3_6_cuda_11_1_cudnn_8_0_cv_4_7_torch_1_10_tv_0_11_tb_2_5.txt
+RUN sed -i '/pickle/d' requirements_u_18_cpp_7_5_py_3_6_cuda_11_1_cudnn_8_0_cv_4_7_torch_1_10_tv_0_11_tb_2_5.txt
+RUN sed -i '/torch/d' requirements_u_18_cpp_7_5_py_3_6_cuda_11_1_cudnn_8_0_cv_4_7_torch_1_10_tv_0_11_tb_2_5.txt
+RUN sed -i '/torchvision/d' requirements_u_18_cpp_7_5_py_3_6_cuda_11_1_cudnn_8_0_cv_4_7_torch_1_10_tv_0_11_tb_2_5.txt
+RUN sed -i '/torchaudio/d' requirements_u_18_cpp_7_5_py_3_6_cuda_11_1_cudnn_8_0_cv_4_7_torch_1_10_tv_0_11_tb_2_5.txt
+RUN pip3 install -r requirements_u_18_cpp_7_5_py_3_6_cuda_11_1_cudnn_8_0_cv_4_7_torch_1_10_tv_0_11_tb_2_5.txt
+RUN python3 -c "import torch; print(torch.version.cuda)"
+RUN pip3 install --upgrade pip 
+RUN pip3 install opencv-python
+#RUN pip3 install libx264-dev
+RUN pip3 install setuptools==59.5.0
+RUN pip3 install tensorboard
+RUN pip3 install matplotlib
+RUN pip3 install natsort
+RUN pip3 install pyrallis
+RUN pip3 install imageio
+RUN pip3 install scipy
+RUN pip3 install ninja
+RUN pip3 install cmake
+RUN pip3 install dlib
+RUN apt-get -y install locales
+# Set the locale
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8     
+
+CMD ["fish"]

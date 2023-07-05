@@ -1,0 +1,27 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update
+
+RUN apt-get install -y git gedit fish
+
+RUN apt-get install -y python3-pip
+
+RUN pip3 install opencv-python
+
+RUN pip3 install Pillow 
+#RUN apt install libxcb-xinerama0
+
+#RUN pip3 install sympy
+#RUN pip3 install scipy
+
+RUN apt-get install -y language-pack-en-base
+
+RUN pip3 install natsort
+
+RUN apt-get install ffmpeg -y
+
+RUN apt-get install python3-tk -y
+
+CMD ["fish"]
